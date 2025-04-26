@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Venues</title>
+    <link rel="icon" href="assets/logo.png" type="image/png" ></link>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('assets/stadium1.jpg') center/cover no-repeat;
+            /* Gradient overlay for readability and blending */
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background: #000; /* Solid black */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px; /* Adjusted for compact size */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+        .header img {
+            width: 50px; /* Increased size for better visibility */
+            height: 50px;
+            object-fit: cover;
+        }
+        .header .title {
+            font-size: 22px; /* Increased font size for better readability */
+            font-weight: bold;
+            color: #e1ff00;
+        }
+        .header .user-icon {
+            width: auto; 
+            height: 40px; 
+            border-radius: 20px; 
+            background: #0fc2dd; 
+            display: inline-flex; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 0 20px; 
+            color: #000; 
+            font-size: 16px; 
+            font-weight: bold; 
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s; 
+            text-transform: uppercase; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+            border: none; 
+        }
+
+        .header .user-icon:hover {
+            background: #fae900; /* Change background color on hover */
+            transform: scale(1.05); /* Slight scaling effect on hover */
+        }
+
+        /* List Container */
+        .list-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 10px;
+        }
+        .list-item {
+            background: rgba(0, 0, 0, 0.8); /* Slight transparency for the overall card */
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+            width: calc(33.333% - 20px);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .list-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
+        }
+        .list-item img {
+            width: 100%;
+            height: 180px; /* Adjusted to reveal more of the image */
+            object-fit: cover;
+        }
+        .list-content {
+            background: rgba(0, 0, 0, 0.4); /* Transparent black for the container bar */
+            padding: 10px 15px; /* Reduced padding */
+        }
+        .list-title {
+            font-size: 18px; /* Reduced size */
+            font-weight: bold;
+            color: #00d9ff;
+            margin: 0;
+        }
+        .list-subtitle {
+            font-size: 14px; /* Reduced size */
+            color: #ccc;
+            margin-top: 5px;
+        }
+        .list-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px; /* Adjusted spacing */
+            font-size: 14px; /* Adjusted size */
+        }
+        .price {
+            color: #00ff00;
+            font-weight: bold;
+        }
+        .loading {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #aaa;
+        }
+
+        @media (max-width: 768px) {
+            .list-item {
+                width: calc(50% - 20px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .list-item {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">
+            <img src="assets/logo.png" alt="Logo">
+            <span class="title">Turf Time</span>
+        </div>
+        <div class="user-icon" onclick="window.location.href=`userPage.html?userid=${userid}`;">
+            <span>Bookings</span>
+        </div>
+    </div>
+
+    <!-- List Container -->
+    <div class="list-container" id="list-container">
+        <div class="loading" id="loading">Loading venues...</div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const userid = urlParams.get('userid');
+        console.log('userid:', userid);
+
+        const API_URL = "http://127.0.0.1:5000/api/Turf";
+
+        async function fetchAndRenderVenues() {
+            const listContainer = document.getElementById("list-container");
+            const loadingIndicator = document.getElementById("loading");
+
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error("Failed to fetch data");
+
+                const venues = await response.json();
+                loadingIndicator.style.display = "none";
+
+                venues.forEach(venue => {
+                    const listItem = document.createElement("div");
+                    listItem.className = "list-item";
+                    listItem.setAttribute("data-id", venue.id);
+
+                    listItem.innerHTML = `
+                        <img src="${venue.imageurls[0]}" alt="${venue.name}">
+                        <div class="list-content">
+                            <p class="list-title">${venue.name}</p>
+                            <p class="list-subtitle">${venue.location}</p>
+                            <div class="list-footer">
+                                <span>${venue.type}</span>
+                                <span class="price">₹${venue.rentperhour} / hour</span>
+                            </div>
+                        </div>
+                    `;
+
+                    listItem.addEventListener("click", () => {
+                        console.log("venue.id:", venue._id);
+                        window.location.href = `turfDetails.html?turfid=${venue._id}&userid=${userid}`;
+                    });
+
+                    listContainer.appendChild(listItem);
+                });
+            } catch (error) {
+                console.error("Error fetching venues:", error);
+                loadingIndicator.textContent = "Failed to load venues. Please try again.";
+            }
+        }
+
+        fetchAndRenderVenues();
+    </script>
+</body>
+</html>

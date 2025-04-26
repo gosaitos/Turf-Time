@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="icon" href="assets/logo.png" type="image/png" ></link>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('assets/dhoni.jpg') center/cover no-repeat;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            height: 60vh;
+            background-size: cover;
+        }
+
+        .header {
+            background: #000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+        .header img {
+            width: 35px;
+            height: 35px;
+            object-fit: cover;
+        }
+        .header .title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff700;
+        }
+        .header .user-icon {
+            width: auto; 
+            height: 40px; 
+            border-radius: 20px; 
+            background: #0fc2dd; 
+            display: inline-flex; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 0 20px; 
+            color: #000; 
+            font-size: 16px; 
+            font-weight: bold; 
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s; 
+            text-transform: uppercase; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+            border: none; 
+        }
+
+        .header .user-icon:hover {
+            background: #e9e60b;
+            transform: scale(1.05);
+        }
+
+        .list-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 10px;
+        }
+        .list-item {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .list-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
+        }
+        .list-item img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 15px 0 0 15px;
+        }
+        .list-content {
+            padding: 20px;
+            flex: 1;
+        }
+        .list-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #00d9ff;
+            margin: 0;
+        }
+        .list-subtitle {
+            font-size: 16px;
+            color: #ccc;
+            margin: 10px 0;
+        }
+        .list-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+        }
+        .price {
+            color: #54e963;
+            font-weight: bold;
+        }
+        .loading {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #aaa;
+        }
+        .no-record {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #00a2ff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo" id="logo">
+            <img src="assets/ball.png" alt="Logo">
+            <span class="title">My Bookings</span>
+        </div>
+        <div class="user-icon" onclick="confirm('Are you Sure? you want to Logout.')?window.location.href='index.html':''">
+            <span>Logout</span>
+        </div>
+    </div>
+
+    <!-- List Container -->
+    <div class="list-container" id="list-container">
+        <div class="loading" id="loading">Loading venues...</div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const userid = urlParams.get('userid');
+        console.log('userid :', userid);
+
+        function naviList(){
+            window.location.href = `turfList.html?userid=${userid}`;
+        }
+        document.getElementById("logo").addEventListener("click", naviList);
+
+        async function fetchAndRenderVenues() {
+            const listContainer = document.getElementById("list-container");
+            const loadingIndicator = document.getElementById("loading");
+
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/api/userbooking/${userid}`);
+                if (!response.ok) throw new Error("Failed to fetch data");
+
+                const venues = await response.json();
+                loadingIndicator.style.display = "none";
+
+                if (venues.length === 0) {
+                    const noRecordMessage = document.createElement('div');
+                    noRecordMessage.classList.add('no-record');
+                    noRecordMessage.textContent = "No record found.";
+                    listContainer.appendChild(noRecordMessage);
+                    return;
+                }
+
+                console.log("VENUES:", venues);
+
+                async function getVenue(id) {
+                    console.log("ID:", id);
+                    try {
+                        const response = await fetch(`http://127.0.0.1:5000/api/venues/${id}`);
+                        return await response.json();
+                    } catch (error) {
+                        console.error("Error fetching venue details:", error);
+                        return null;
+                    }
+                }
+
+                for (const venue of venues) {
+                    const turf = await getVenue(venue.turfId);
+                    console.log("TURF:", turf);
+
+                    if (!turf) {
+                        console.warn("Skipping venue due to missing turf details:", venue);
+                        continue;
+                    }
+
+                    const listItem = document.createElement("div");
+                    listItem.className = "list-item";
+                    listItem.setAttribute("data-id", venue.id);
+
+                    const imageUrl = turf.imageurls && turf.imageurls[0] ? turf.imageurls[0] : 'assets/default-image.jpg';
+
+                    listItem.innerHTML = `
+                        <img src="${imageUrl}" alt="${turf.name || 'Venue'}">
+                        <div class="list-content">
+                            <p class="list-title">${turf.name || 'Unnamed Venue'}</p>
+                            <p class="list-subtitle">${turf.location || 'Unknown Location'}</p>
+                            <div class="list-footer">
+                                <span>${turf.type || 'Unknown Type'}</span>
+                                <span class="price">Date: ${venue.date || 'N/A'}</span>
+                            </div>
+                        </div>
+                    `;
+
+                    listItem.addEventListener("click", () => {
+                        console.log("venue.id:", venue._id);
+                        window.location.href = `userBooking.html?bookingid=${venue._id}&turfid=${venue.turfId}`;
+                    });
+
+                    listContainer.appendChild(listItem);
+                }
+            } catch (error) {
+                console.error("Error fetching venues:", error);
+                loadingIndicator.textContent = "Failed to load venues. Please try again.";
+            }
+        }
+
+        fetchAndRenderVenues();
+    </script>
+</body>
+</html>

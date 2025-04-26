@@ -1,0 +1,119 @@
+[{
+  "_id": {
+    "$oid": "67502c1aecba2f648f907d10"
+  },
+  "name": "Marshland Cricket Academy 2.0 ",
+  "address": "No.12, Aadhimoolam Street Extension, Pallikaranai, Chennai - 600100",
+  "rentperhour": 400,
+  "type": "Cricket",
+  "imageurls": [
+    "https://playo.gumlet.io/MARSHLANDCRICKETACADEMY20INDOORTURF20240820064542186697/MarshlandCricketAcademy20IndoorTurf1726744466199.jpg",
+    "https://playo.gumlet.io/MARSHLANDCRICKETACADEMY20INDOORTURF20240820064542186697/MarshlandCricketAcademy20IndoorTurf1726744499707.jpg",
+    "https://playo.gumlet.io/MARSHLANDCRICKETACADEMY20INDOORTURF20240820064542186697/MarshlandCricketAcademy20IndoorTurf1726744471355.jpg"
+  ],
+  "description": "Marshland Cricket Academy 2.0 - Indoor Turf, located at No.12, Aadhimoolam Street Extension, Pallikaranai, Chennai, offers a premium cricket experience with rental rates of ₹400 per hour. Open from 6 AM to 12 PM, it's the perfect spot for cricket enthusiasts to enjoy their game indoors.",
+  "location": "Pallikaranai",
+  "rating": "4.3"
+},
+{
+  "_id": {
+    "$oid": "67502c1aecba2f648f907d11"
+  },
+  "name": "Huddle Up - Cleats",
+  "address": "No. 1/1, EMELEM Complex, 2nd Floor, Mahalingapuram Main Road, Mahalingapuram, Chennai - 600034",
+  "rentperhour": 350,
+  "type": "Football",
+  "imageurls": [
+    "https://playo.gumlet.io/HUDDLEUPCLEATS20241007055557858026/huddleupcleats1728280849476.jpeg",
+    "https://playo.gumlet.io/HUDDLEUPCLEATS20241007055557858026/huddleupcleats1728280889010.jpeg",
+    "https://playo.gumlet.io/HUDDLEUPCLEATS20241007055557858026/huddleupcleats1728280912513.jpeg"
+  ],
+  "description": "Huddle Up - Cleats, situated at No. 1/1, EMELEM Complex, 2nd Floor, Mahalingapuram Main Road, Mahalingapuram, Chennai, offers a football experience like no other. Open from 5 AM to 12 AM, you can rent the turf for just ₹350 per hour and enjoy a game of football any time of the day.",
+  "location": "Mahalingapuram",
+  "rating": "3.9"
+},
+{
+  "_id": {
+    "$oid": "67502c1aecba2f648f907d12"
+  },
+  "name": "Wesley Turf and Fitness Club",
+  "address": "3747+WMW, Westcott Rd, Indira Garden, Royapettah, Chennai, Tamil Nadu 600014",
+  "rentperhour": 600,
+  "type": "Cricket",
+  "imageurls": [
+    "https://playo.gumlet.io/WESLEYTURFANDFITNESSCLUB20241025041552380147/WesleyTurfandFitnessClub1729829899693.jpeg",
+    "https://playo.gumlet.io/WESLEYTURFANDFITNESSCLUB20241025041552380147/WesleyTurfandFitnessClub1729829905045.jpeg",
+    "https://playo.gumlet.io/WESLEYTURFANDFITNESSCLUB20241025041552380147/WesleyTurfandFitnessClub1729829915140.jpeg"
+  ],
+  "description": "Wesley Turf and Fitness Club, located at 3747+WMW, Westcott Rd, Indira Garden, Royapettah, Chennai, offers a fantastic cricket facility open from 5 AM to 11 PM. With an affordable rental rate of ₹600 per hour, it's the perfect spot for cricket enthusiasts to practice and play.",
+  "location": "Royapettah",
+  "rating": "4.3"
+},
+{
+  "_id": {
+    "$oid": "67502c1aecba2f648f907d13"
+  },
+  "name": "HotFut SPR Sports - Vivira Mall",
+  "address": "33, OMR Road, Navalur, Tamil Nadu - 600130",
+  "rentperhour": 500,
+  "type": "Cricket",
+  "imageurls": [
+    "https://playo.gumlet.io/HOTFUT6CB8BF2A5F49/HotfutSPRSportsViviraMall1717426956970.jpg",
+    "https://playo.gumlet.io/HOTFUT6CB8BF2A5F49/HotfutSPRSportsViviraMall1717426960471.jpg",
+    "https://playo.gumlet.io/HOTFUT6CB8BF2A5F49/HotfutSPRSportsViviraMall1717426963637.jpg"
+  ],
+  "description": "HotFut SPR Sports - Vivira Mall, located at 33, OMR Road, Navalur, Tamil Nadu, offers cricket enthusiasts a premium experience. Open from 6 AM to 12 AM, this facility can be rented for ₹500 per hour, providing ample time for practice and play.",
+  "location": "Navalur",
+  "rating": "4.7"
+},
+{
+  "_id": {
+    "$oid": "67502c1aecba2f648f907d14"
+  },
+  "name": "Super Kings Academy",
+  "address": "361, Madha Kovil Street, Vivekananda Nagar, Thoraipakkam, Chennai - 97",
+  "rentperhour": 777,
+  "type": "Cricket",
+  "imageurls": [
+    "https://playo.gumlet.io/SUPERKINGSACADEMY20230119133756726554/SuperKingsAcademy1674135902895.png",
+    "https://playo.gumlet.io/SUPERKINGSACADEMY20230119133756726554/SuperKingsAcademy1674135917413.png",
+    "https://playo.gumlet.io/SUPERKINGSACADEMY20230119133756726554/SuperKingsAcademy1674136097959.png"
+  ],
+  "description": "Super Kings Academy, located at 361, Madha Kovil Street, Vivekananda Nagar, Thoraipakkam, Chennai, offers a premium cricket experience. Open from 7 AM to 11 AM, this facility can be rented for ₹777 per hour. It's the ideal spot for cricket enthusiasts to practice and improve their game.",
+  "location": "Thoraipakkam",
+  "rating": "4.7"
+},
+{
+  "_id": {
+    "$oid": "67502c1aecba2f648f907d15"
+  },
+  "name": "OMR Sports Arena",
+  "address": "No.461/6A, Rajiv Gandhi Salai, ART Complex, Opp. Accenture, Sholinganallur, Chennai-600119",
+  "rentperhour": 550,
+  "type": "Football",
+  "imageurls": [
+    "https://playo.gumlet.io/OMRBADMINTONACADEMY/OMRSportsArena1722854449394.jpeg",
+    "https://playo.gumlet.io/OMRBADMINTONACADEMY/OMRSportsArena1722854459370.jpeg",
+    "https://playo.gumlet.io/OMRBADMINTONACADEMY/OMRSportsArena1722854520507.jpeg"
+  ],
+  "description": "OMR Sports Arena, located at No.461/6A, Rajiv Gandhi Salai, ART Complex, Opp. Accenture, Sholinganallur, Chennai, is the perfect spot for football enthusiasts. Open 24x7, you can enjoy the facility any time of the day for ₹550 per hour.",
+  "location": "Sholinganallur",
+  "rating": "4.6"
+},
+{
+  "_id": {
+    "$oid": "67502c1aecba2f648f907d16"
+  },
+  "name": "Offside Arena",
+  "address": "94, Kuppuswamy St, Golden George Nagar, Mogappair East, Chennai, Tamil Nadu 600107",
+  "rentperhour": 600,
+  "type": "Football",
+  "imageurls": [
+    "https://playo.gumlet.io/OFFSIDEARENA20230323100112945136/offsidearena1679565608503.jpg",
+    "https://playo.gumlet.io/OFFSIDEARENA20230323100112945136/offsidearena1679565615443.jpg",
+    "https://playo.gumlet.io/OFFSIDEARENA20230323100112945136/offsidearena1679565628558.jpg"
+  ],
+  "location": " Mogappair East",
+  "rating": "4.1",
+  "description": "Offside Arena is a top-rated football turf located in Mogappair East, Chennai, known for its excellent facilities and prime location at 94, Kuppuswamy St. With a rating of 4.1 and a rent of ₹600 per hour, it's the perfect spot for football enthusiasts to enjoy a game."
+}]

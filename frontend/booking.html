@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Page</title>
+  <link rel="icon" href="assets/logo.png" type="image/png" ></link>
+
+  <style>
+/* General Styling */
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('assets/csk1.jpg') no-repeat center center fixed;
+  background-size: cover;
+  background-blend-mode: darken;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+  padding: 0 20px;
+}
+#box {
+
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    #box:hover {
+      transform: translateY(-10px); /* Hover effect for lift */
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+    }
+
+/* Booking Container */
+.booking-container {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  padding: 25px 50px;
+  width: 90%;
+  max-width: 800px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  height: 90%;
+}
+
+/* Calendar Section */
+.calendar {
+  width: 100%;
+  margin-bottom: 20px;
+  text-align: middle;
+  margin-right: 25px;
+}
+
+.calendar label {
+  font-size: 18px;
+  color: white;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.calendar input[type="date"] {
+  width: 100%;
+  padding: 10px 10px 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  text-align: left;
+  margin-bottom: 20px; /* Added gap */
+}
+
+.calendar input[type="date"]::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.calendar input[type="date"]:focus {
+  outline: none;
+  border: 1px solid #1e90ff;
+}
+
+/* Time Slots */
+.time-slots {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: nowrap;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.time-slot {
+  background: rgba(30, 144, 255, 0.8);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  flex: 1;
+  margin: 5px; /* Added gap */
+  text-align: center;
+}
+
+.time-slot:hover:not(.disabled) {
+  background: rgba(21, 101, 192, 0.9);
+  box-shadow: 0 0 10px rgba(30, 144, 255, 0.8);
+}
+
+.time-slot.active {
+  background: rgba(0, 255, 0, 0.8);
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.9);
+}
+
+.time-slot.disabled {
+  background: rgba(128, 128, 128, 0.6);
+  cursor: not-allowed;
+}
+
+/* Details Section */
+.details {
+  width: 100%;
+  margin-bottom: 15px;
+  text-align: left;
+  margin-right: 25px;
+}
+
+.details label {
+  font-size: 16px;
+  color: white;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.details input {
+  width: 100%;
+  padding: 10px 10px 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  margin-bottom: 20px;
+}
+
+.details input[readonly] {
+  background: rgba(128, 128, 128, 0.2);
+  cursor: not-allowed;
+}
+
+.details input:focus {
+  border: 1px solid #1e90ff;
+  outline: none;
+}
+
+/* Buttons */
+button {
+  background: #1e90ff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  margin-bottom: 20px; /* Added gap */
+}
+
+button:hover {
+  background: #1565c0;
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(21, 101, 192, 0.9);
+}
+
+button:active {
+  background: green;
+}
+
+.check-availability {
+  background: #ff9800;
+}
+
+.check-availability:hover {
+  background: #e68900;
+  box-shadow: 0 0 15px rgba(255, 152, 0, 0.8);
+}
+
+.book-now:hover {
+  background: #28a745;
+  box-shadow: 0 0 15px rgba(40, 167, 69, 0.8);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .time-slots {
+    flex-wrap: wrap;
+  }
+
+  .time-slot {
+    width: 48%;
+    margin: 5px 1%;
+  }
+
+  .booking-container {
+    padding: 20px;
+    
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div id="box">
+  <div class="booking-container">
+    <!-- Calendar Section -->
+    <div class="calendar">
+      <label for="booking-date">Select a Date</label>
+      <input type="date" id="booking-date" required >
+    </div>
+
+    <!-- Check Availability Button -->
+    <button class="check-availability" id="check-availability">Check Availability</button>
+
+    <!-- Time Slots -->
+    <div class="time-slots">
+      <button class="time-slot" data-hours="3" id="slot1">6:00 AM - 9:00 AM</button>
+      <button class="time-slot" data-hours="3" id="slot2">10:00 AM - 1:00 PM</button>
+      <button class="time-slot" data-hours="3" id="slot3">3:00 PM - 6:00 PM</button>
+      <button class="time-slot" data-hours="3" id="slot4">7:00 PM - 10:00 PM</button>
+    </div>
+
+    <!-- Details Section -->
+    <div class="details">
+      <input type="text" id="name" placeholder="Name" required>
+      <input type="tel" id="phone" placeholder="Phone Number" required>
+      <input type="text" id="sports" placeholder="Sports" readonly>
+      <input type="number" id="rent" placeholder="Rent per Hour" readonly>
+      <input type="number" id="price" placeholder="Total Price" readonly>
+    </div>
+
+    <!-- Book Now Button -->
+    <button class="book-now">Book Now</button>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const turfId =  urlParams.get('turfid');
+    const userId =  urlParams.get('userid');
+    const rentPerHour =  urlParams.get('rph'); 
+    const selectedSport =  urlParams.get('type');
+    console.log('turfid : ',turfId);
+    console.log("userid : " , userId);
+    console.log('type : ',selectedSport);
+    console.log("rent per hour : " , rentPerHour); 
+    document.getElementById("rent").value = rentPerHour;
+    document.getElementById("sports").value = selectedSport;
+
+    // Initialize total hours and price
+    let totalHours = 0;
+
+    // Function to check slot availability
+    function checkSlotAvailability(date) {
+
+        const slots = ["slot1","slot2","slot3","slot4"];
+
+        slots.forEach(data =>{
+            const button = document.getElementById(data);
+
+            button.style.backgroundColor = '';
+
+            button.disabled = false;
+        });
+
+      fetch("http://127.0.0.1:5000/check-availability", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ turfId, date})
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Data: ', data);
+
+        const unavailable = data.data;
+
+        unavailable.forEach(data =>{
+        const button = document.getElementById(data);
+
+        button.style.backgroundColor = 'grey';
+
+        button.disabled = true;
+
+        });
+
+
+        
+      })
+      .catch(error => {
+        console.error('Error checking slot availability:', error);
+      });
+    }
+
+    // Add event listener to Check Availability button
+    document.getElementById("check-availability").addEventListener("click", function() {
+      const bookingDate = document.getElementById("booking-date").value;
+      if (bookingDate) {
+        console.log("DATE : " , bookingDate);
+        checkSlotAvailability(bookingDate);
+      } else {
+        alert("Please select a date first.");
+      }
+    });
+
+    const timeSlots = document.querySelectorAll(".time-slot");
+    timeSlots.forEach(slot => {
+      slot.addEventListener("click", () => {
+        if (!slot.classList.contains("disabled")) {
+          const hours = parseInt(slot.getAttribute("data-hours"));
+
+          // Toggle slot selection
+          if (slot.classList.contains("active")) {
+            slot.classList.remove("active");
+            totalHours -= hours;
+          } else {
+            slot.classList.add("active");
+            totalHours += hours;
+          }
+
+          // Update the total price
+          const price = totalHours * rentPerHour;
+          document.getElementById("price").value = price;
+        }
+      });
+    });
+
+    // Book Now button click event
+    document.querySelector(".book-now").addEventListener("click", function () {
+      const bookingDate = document.getElementById("booking-date").value;
+      const selectedSlots = {
+        slot1: document.getElementById("slot1").classList.contains("active"),
+        slot2: document.getElementById("slot2").classList.contains("active"),
+        slot3: document.getElementById("slot3").classList.contains("active"),
+        slot4: document.getElementById("slot4").classList.contains("active"),
+      };
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const sports = document.getElementById("sports").value;
+      const rent = document.getElementById("rent").value;
+      const price = document.getElementById("price").value;
+
+      const bookingData = {
+        turfId: turfId,
+        userId: userId,
+        date: bookingDate,
+        ...selectedSlots,
+        name,
+        phno: phone,
+      };
+    if(!name || !phone || !price || !bookingDate ){
+            alert("Fill All Details!!");
+      }
+    else{
+        console.log("bookingData: ", bookingData);
+        book();
+    }
+      
+
+
+      function book (){
+      fetch('http://127.0.0.1:5000/book', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bookingData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('Booking successful');
+        window.location.href = `turfList.html?userid=${userId}`; 
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('There was an issue with your booking');
+      });
+    }
+    });
+
+  </script>
+  </div>
+</body>
+</html>

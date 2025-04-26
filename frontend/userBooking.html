@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings</title>
+    <link rel="icon" href="assets/logo.png" type="image/png" ></link>
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Header Section */
+        .header-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+        }
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        .header-content {
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+            color: #fff;
+        }
+        .venue-title {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .venue-location {
+            font-size: 18px;
+            color: #ccc;
+            margin-top: 5px;
+        }
+        .venue-rating, .venue-type {
+            font-size: 16px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .rating-stars {
+            margin-right: 10px;
+            color: #ffcc00;
+        }
+
+        /* Venue Info Section */
+        .venue-info-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+        .info-heading {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #f5f5f5;
+        }
+        .venue-address, .venue-description, .venue-rent {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #ccc;
+            line-height: 1.8;
+        }
+        .highlight {
+            color: #00c6ff;
+            font-weight: bold;
+        }
+
+        /* Book Now Button */
+        .book-now-btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px; /* Rounded corners */
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3); /* Soft shadow */
+        }
+
+        .book-now-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: width 0.3s ease, height 0.3s ease, top 0.3s ease, left 0.3s ease;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .book-now-btn:hover {
+            background-color: #00d22a;
+            transform: translateY(-3px); /* Elevate button on hover */
+        }
+
+        .book-now-btn:hover::before {
+            width: 0;
+            height: 0;
+            top: 50%;
+            left: 50%;
+        }
+
+        .book-now-btn:active {
+            transform: translateY(1px); /* Slightly press button when clicked */
+        }
+
+        /* Gallery Section */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .gallery-photo {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        .gallery-photo:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div class="header-container" id="venue-header">
+        <div class="header-overlay"></div>
+        <div class="header-content">
+            <h1 class="venue-title" id="venue-title">Loading...</h1>
+            <p class="venue-location" id="venue-location">Loading...</p>
+            <div class="venue-rating" id="venue-rating">
+                <span class="rating-stars">★</span>
+                <span>Loading...</span>
+            </div>
+            <div class="venue-type" id="venue-type">
+                <span>Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Venue Info Section -->
+    <div class="venue-info-container">
+        <h2 class="info-heading">Address</h2>
+        <p class="venue-address" id="venue-address">Loading...</p>
+
+        <h2 class="info-heading">Description</h2>
+        <p class="venue-description" id="venue-description">Loading...</p>
+
+        <h2 class="info-heading">Rent</h2>
+        <p class="venue-rent"><span class="highlight" id="rentperhour">Loading...</span> per hour</p>
+
+        <h2 class="info-heading">Booking Date</h2>
+        <p class="venue-description" id="booking-date">Loading...</p>
+
+        <h2 class="info-heading">Booked slot:</h2>
+        <p class="venue-description" id="slot1"></p>
+        <p class="venue-description" id="slot2"></p>
+        <p class="venue-description" id="slot3"></p>
+        <p class="venue-description" id="slot4"></p>
+
+        <h2 class="info-heading">Name </h2>
+        <p class="venue-description" id="name">Loading...</p>
+
+        <h2 class="info-heading">Phone Number </h2>
+        <p class="venue-description" id="phno">Loading...</p>
+
+        <h2 class="info-heading">Total Price</h2>
+        <p class="venue-description" id="price">Loading...</p>
+
+        <a class="book-now-btn" id="book-now-btn">Cancel</a>
+    </div>
+
+    <!-- Photo Gallery Section -->
+    <div class="venue-info-container">
+        <h2 class="info-heading">Gallery</h2>
+        <div class="photo-gallery" id="photo-gallery">
+            <!-- Photos will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const turfid = urlParams.get('turfid');
+        const bookingid = urlParams.get('bookingid');
+        let venue = null;
+        let booking = null;
+
+        async function DeleteBooking() {
+            
+            if(confirm("Are you Sure? You want to Cancel Booking.")){
+                try {
+                const response = await fetch(`http://127.0.0.1:5000/api/detelebooking/${bookingid}`,{method: 'DELETE',});
+                if (!response.ok) throw new Error("Failed to fetch data");
+
+                if(response.status === 201){
+                    alert('Booking Canceled Successfully!!');
+                    const bookingUrl = `userPage.html?userid=${booking.userId}`;
+                    window.location.href = bookingUrl;
+                }
+                else{
+                    alert("An Error Occured!!");
+                    return;
+                }
+
+                } catch (error) {
+                console.error("Error Deleting venues:", error);
+                loadingIndicator.textContent = "Failed to Cancel Booking. Please try again.";
+                }
+            }
+            
+        }
+
+        document.getElementById("book-now-btn").addEventListener("click", DeleteBooking);
+
+        async function fetchVenueDetails() {
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/api/venues/${turfid}`);
+                venue = await response.json();
+
+                const response1 = await fetch(`http://127.0.0.1:5000/api/booking/${bookingid}`);
+                booking = await response1.json();
+
+                console.log("Booking : ",booking);
+
+                document.getElementById('venue-header').style.backgroundImage = `url(${venue.imageurls[0]})`;
+                document.getElementById('venue-title').innerText = venue.name;
+                document.getElementById('venue-location').innerText = venue.location;
+                document.getElementById('venue-rating').innerHTML = `Rating: ${venue.rating} ★`;
+                document.getElementById('venue-type').innerText = `Type: ${venue.type}`;
+                document.getElementById('venue-address').innerText = venue.address;
+                document.getElementById('venue-description').innerText = venue.description;
+                document.getElementById('rentperhour').innerText = `₹ ${venue.rentperhour}`;
+                document.getElementById('booking-date').innerText = ` ${booking.date}`;
+                document.getElementById('name').innerText = ` ${booking.name}`;
+                document.getElementById('phno').innerText = ` ${booking.phno}`;
+
+                let hrs =0;
+
+                if(booking.slot1){
+                    document.getElementById('slot1').innerText = "Slot 1 : 6:00 AM to 9:00 AM";
+                    hrs+=3;
+                }
+                if(booking.slot2){
+                    document.getElementById('slot2').innerText = "Slot 2 : 10:00 AM to 12:00 PM";
+                    hrs+=2;
+                }
+                if(booking.slot3){
+                    document.getElementById('slot3').innerText = "Slot 3 : 3:00 PM to 6:00 PM";
+                    hrs+=3;
+                }
+                if(booking.slot4){
+                    document.getElementById('slot4').innerText = "Slot 4 : 7:00 PM to 10:00 PM";
+                    hrs+=3;
+                }
+
+                document.getElementById('price').innerText = `₹ ${venue.rentperhour * hrs}`;
+                const gallery = document.getElementById('photo-gallery');
+                venue.imageurls.forEach(url => {
+                    const img = document.createElement('img');
+                    img.src = url;
+                    img.alt = "Venue Image";
+                    img.classList.add('gallery-photo');
+                    gallery.appendChild(img);
+                });
+            } catch (error) {
+                console.error("Error fetching venue details:", error);
+            }
+        }
+
+        fetchVenueDetails();
+    </script>
+
+</body>
+</html>

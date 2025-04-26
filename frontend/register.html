@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="icon" href="assets/logo.png" type="image/png" ></link>
+
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)),
+                  url('assets/ds.jpg') no-repeat center center fixed;
+      background-size: cover;
+      background-blend-mode: darken;
+      color: white;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      transition: background 0.3s ease-in-out;
+    }
+
+    /* Register Form Container */
+    #registerForm {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 40px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transform: scale(1);
+      transition: transform 0.3s ease;
+      text-align: center;
+    }
+
+    #registerForm:hover {
+      transform: scale(1.05);
+    }
+
+    /* Logo styles */
+    .logo {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px auto;
+      border-radius: 50%;
+      border: 3px solid #1a73e8;
+      background: url('assets/logo.png') no-repeat center center / cover;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Project Title Style */
+    .project-title {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #1a73e8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Heading Style */
+    h2 {
+      text-align: center;
+      font-size: 30px;
+      margin-bottom: 20px;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: 1px;
+    }
+
+    /* Input Field Styles */
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 12px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #222;
+      color: #fff;
+      font-size: 16px;
+      box-sizing: border-box;
+      transition: border 0.3s ease, background-color 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #1a73e8;
+      background-color: #333;
+    }
+
+    /* Button Style */
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+    }
+
+    button:hover {
+      background-color: #1565c0;
+      transform: translateY(-2px);
+    }
+
+    /* Link Style */
+    p {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    p a {
+      color: #1a73e8;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    p a:hover {
+      color: #1565c0;
+      text-decoration: underline;
+    }
+
+    /* Responsive Styling */
+    @media (max-width: 500px) {
+      #registerForm {
+        width: 90%;
+        padding: 30px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="registerForm">
+    <!-- Logo -->
+    <div class="logo"></div>
+    <!-- Project Title -->
+    <div class="project-title">Turf Time</div>
+    <h2>Register</h2>
+    <form id="register" onsubmit="handelsubmit(event)">
+      <input type="text" id="name" placeholder="Full Name" required><br>
+      <input type="email" id="email" placeholder="Email" required><br>
+      <input type="password" id="password" placeholder="Password" required><br>
+      <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="login.html">Login</a></p>
+  </div>
+
+  <script>
+    function handelsubmit(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      console.log('Name:', name);
+      console.log('Email:', email);
+      console.log('Password:', password);
+
+      fetch('http://127.0.0.1:5000/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password })
+      })
+      .then(res => {
+        console.log(res);
+        if (res.status == 201) {
+          alert("Registered Successfully");
+          window.location.href = "login.html";
+        } else {
+          alert("An Error Occurred. Please try again later!");
+        }
+      })
+      .catch(error => console.log('Registration error:', error));
+    }
+  </script>
+</body>
+</html>
